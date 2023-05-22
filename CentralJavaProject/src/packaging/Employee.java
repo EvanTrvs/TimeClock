@@ -1,5 +1,6 @@
 package packaging;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 
 public class Employee {
@@ -11,7 +12,7 @@ public class Employee {
 
 	//private JavaDateTime timeCredit;
 	
-	private ArrayList<Shedule> list = new ArrayList<>(7);
+	private ArrayList<Schedule> list = new ArrayList<Schedule>(7);
 
 	private static int nbEmployee;
 	
@@ -62,9 +63,10 @@ public class Employee {
 		return nbEmployee;
 	}
 
-	public Shedule getShedule(Day day) {
+	//public Schedule getSchedule(DayOfWeek day) {
+		/*
 		try {
-			return list.get(Day.GetId(day));
+			return list.get(DayOfWeek.GetId(day));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,7 +74,7 @@ public class Employee {
 		return null;
 	}
 
-	public void setList(Shedule shedule,Day day) {
-		list.set(Day.GetId(day), shedule);
-	}
+	public void setList(Schedule shedule,DayOfWeek day) {
+		list.set(DayOfWeek.GetId(day), shedule);*/
+	//}
 }
