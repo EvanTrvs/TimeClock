@@ -12,6 +12,7 @@ public class main {
 		test.addEmployee(emp1);
 		test.addEmployee(emp3);
 		test.addEmployee(emp2);
+		test.saveData();
 		test.getData();
 		
 	}
