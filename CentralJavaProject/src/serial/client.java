@@ -1,53 +1,54 @@
 package serial;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
-class UDPClientHello extends UDPClientBuilder implements Runnable {
-	private boolean running;
-	private FIFO fifo;
+class UDPClient extends UDPClientBuilder implements Runnable {
+	ArrayList<Timeclock> toSend;
+
+	public UDPClient()
+	{
+		toSend = new ArrayList<>();
+	}
 	public void run() {
-		running = true;
-		try {
-			while (running)
-			{
-		        while (!fifo.isEmpty()) {
-		        	Timeclock element = fifo.dequeue();
-		            
-		            sendSocket(element);
-		        }
-			}
 
-		} catch (Exception e) {
-			System.out.println("IOException UDPClient");
-		}
 	}
 
 	private void sendSocket(Timeclock element) {
+		toSend.add(element);
+		int send = 0;
 		try {
-			setConnection();
-			req = getSendingPacket(isA, 2028);
-			setMsg(req, element);
-			s.send(req);
-			s.close();
+			for (Timeclock timeclock : toSend)
+			{
+				setConnection();
+				req = getSendingPacket(isA, 2028);
+				setMsg(req, timeclock);
+				s.send(req);
+				s.close();	
+				send++;			
+			}
+
 		} catch (Exception e) {			
-			e.printStackTrace();
+			for(int i= 0;i<send;i++)
+			{
+				toSend.remove(0);
+			}
 		}	
 	}
 
 	public void Ping( int id) {
-		LocalTime time = LocalTime.now();
+		LocalDateTime time = LocalDateTime.now();
 		int min = time.getMinute();
-        float div= (float)min /(float)15;
-        int v = Math.round(div);       
-        
-		int b= (int) Math.round(  (double)time.getMinute()  /(double)4)*15;
-		
-		 fifo.enqueue(new Timeclock(id));
+		int b= (int) Math.round(  (double)min /(double)4)*15;
+		if (b ==60)
+		{
+			b=0;
+			time.plusHours(1);
+		}
+		time.withMinute(b);
+		sendSocket(new Timeclock(id,time));
 	}
 
-	public boolean getRunning() {
-		return running;
-	}
 	
 	
 }

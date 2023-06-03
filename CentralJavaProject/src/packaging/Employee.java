@@ -1,15 +1,20 @@
 package packaging;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Employee {
+import serial.WorkSession;
+import serial.Timeclock;
+
+public class Employee implements Serializable{
 	private int UUID;
 
 	private String Name;
 
 	private String FirstName;
 
-	//private JavaDateTime timeCredit;
+	private WorkSession currentSession;
+	private ArrayList<WorkSession> historique;
 	
 	private ArrayList<Shedule> list = new ArrayList<>(7);
 
@@ -66,7 +71,6 @@ public class Employee {
 		try {
 			return list.get(Day.GetId(day));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -74,5 +78,19 @@ public class Employee {
 
 	public void setList(Shedule shedule,Day day) {
 		list.set(Day.GetId(day), shedule);
+	}
+
+	public void addTimeclock(Timeclock timeclock)
+	{
+		if (currentSession != null)
+		{
+			currentSession.setEnd(timeclock.getTime());
+			historique.add(currentSession);
+			currentSession = null;
+		}
+		else
+		{
+			currentSession = new WorkSession(timeclock.getTime());
+		}
 	}
 }

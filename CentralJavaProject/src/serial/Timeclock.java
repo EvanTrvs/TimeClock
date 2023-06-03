@@ -1,24 +1,25 @@
 package serial;
 
-import java.io.Serializable;
-import java.time.LocalTime;
-import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-class Timeclock implements Serializable {
+public class Timeclock implements Serializable {
 
 		/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 		private int id;
-		private LocalTime time;
-		public Timeclock(int id)
+		private LocalDateTime time;
+		public Timeclock(int id,LocalDateTime time)
 		{
 			this.id = id;
+			this.time = time;
 
 		}
 		public void Setterid(int id)
@@ -47,10 +48,10 @@ class Timeclock implements Serializable {
 		    ObjectInputStream is = new ObjectInputStream(in);
 		    return is.readObject();
 		}
-		public LocalTime getTime() {
+		public LocalDateTime getTime() {
 			return time;
 		}
-		public void setTime(LocalTime time) {
+		public void setTime(LocalDateTime time) {
 			this.time = time;
 		}
 }

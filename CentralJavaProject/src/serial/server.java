@@ -2,14 +2,16 @@ package serial;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.util.ArrayList;
 
 class UDPServerHello extends UDPServerBuilder implements Runnable {
+	ArrayList<Timeclock> recu;
 	public void run() {
 		try {
 
 			setConnection();
 			System.out.println("ready");
-			s.setSoTimeout(500);
+			//s.setSoTimeout(500);
 			DatagramPacket req;
 			while (true) {
 				req = new DatagramPacket(new byte[size], size);

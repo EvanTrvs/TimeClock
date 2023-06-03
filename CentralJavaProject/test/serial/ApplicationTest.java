@@ -12,7 +12,7 @@ public class ApplicationTest {
 	{
 		//new Thread(new UDPServerHello()).start();
 		//new Thread(new UDPClientHello()).start();
-		Application test = new Application();
+		ApplicationCentrale test = new ApplicationCentrale();
 		Employee emp1 = new Employee("Michel");
 		Employee emp2 = new Employee("Michelle");
 		Employee emp3 = new Employee("Samuel");
@@ -22,7 +22,7 @@ public class ApplicationTest {
 		test.addEmployee(emp2);
 		test.saveData();
 		
-		Application test2 = new Application();
+		ApplicationCentrale test2 = new ApplicationCentrale();
 		test2.getData();
 		test2.getEmployee();
 		
