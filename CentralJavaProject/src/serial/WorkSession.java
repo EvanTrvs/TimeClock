@@ -2,7 +2,7 @@ package serial;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.chrono.MinguoDate;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 
 public class WorkSession{
@@ -19,7 +19,7 @@ public class WorkSession{
 	
 	public int getWeek()
 	{
-		return 1;
+		return start.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
 	}
 	
 	public LocalDateTime getStart() {

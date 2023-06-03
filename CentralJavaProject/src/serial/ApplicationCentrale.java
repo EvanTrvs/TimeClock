@@ -8,29 +8,38 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class ApplicationCentrale {
+public class ApplicationCentrale extends UDPServer{
 	ArrayList<Employee> ListEmployee;
-	ArrayList<Timeclock> ListTimeclock;
-	int Nbemployee;
-	int Nbtimeclock;
+
 
 	public ApplicationCentrale() {
-		Nbemployee = 0;
-		Nbtimeclock = 0;
 		ListEmployee = new ArrayList<Employee>();
-		ListTimeclock = new ArrayList<Timeclock>();
+		new Thread(this).start();
+
 	}
 
-	
-	public ArrayList<Employee> getEmployee() {
+	@Override
+	void Reception(Timeclock elem) {
+		addPointage(elem);
+	}
+
+	public ArrayList<Employee> getEmployees() {
  		return ListEmployee;
 
 	}
-
+	public Employee getEmployee(int id) {
+		for (Employee empl : ListEmployee)
+		{
+			if (empl.getId() == id)
+			{
+				return empl;
+			}
+		}
+		return null;
+   }	
 	
 	public void addEmployee(Employee param) {
 		ListEmployee.add(param);
-		Nbtimeclock++;
 
 	}
 
@@ -41,7 +50,9 @@ public class ApplicationCentrale {
 
 	
 	public void addPointage(Timeclock param) {
-		
+		Employee empl = getEmployee(param.getterId());
+		empl.addTimeclock(param);
+
 	}
 
 	

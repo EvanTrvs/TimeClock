@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.util.ArrayList;
 
-class UDPServerHello extends UDPServerBuilder implements Runnable {
+class UDPServer extends UDPServerBuilder implements Runnable {
 	ArrayList<Timeclock> recu;
 	public void run() {
 		try {
@@ -24,6 +24,7 @@ class UDPServerHello extends UDPServerBuilder implements Runnable {
 				
 				System.out.println("Recu : ");
 				System.out.println(reception.getterId());
+				Reception(reception);
 				if (reception.getterId() == 9) {
 					break;
 				}
@@ -44,6 +45,10 @@ class UDPServerHello extends UDPServerBuilder implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+	void Reception(Timeclock elem)
+	{
+		//to Override
 	}
 
 }

@@ -1,15 +1,16 @@
 package serial;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Employee implements Serializable{
-	/**
-	 * 
-	 */
+	
+	static ArrayList<Integer> listId = new ArrayList<>();
 	private String name;
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private WorkSession currentSession;
 	private ArrayList<WorkSession> historique;
 	public Employee(){
@@ -21,9 +22,13 @@ public class Employee implements Serializable{
 		this.setName(name);
 		currentSession = null;
 		historique = new ArrayList<WorkSession>();
+		id = getNewId();
 		return;
 	}
-
+	public void finalize()
+	{
+		listId.remove(this.id);
+	}
 	public String getName() {
 		return name;
 	}
@@ -64,5 +69,23 @@ public class Employee implements Serializable{
 			}
 		}
 		return sum;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getNewId()
+	{
+		Random rn = new Random();
+		int id = 0;
+		while (listId.contains(id))
+		{
+			id = rn.nextInt(1000);
+		}
+		return id;
 	}
 }

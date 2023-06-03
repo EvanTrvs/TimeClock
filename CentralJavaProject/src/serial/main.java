@@ -4,7 +4,7 @@ public class main {
 	public static void main(String[] args) {
 		//new Thread(new UDPServerHello()).start();
 		//new Thread(new UDPClientHello()).start();
-		Application test = new Application();
+		ApplicationCentrale test = new ApplicationCentrale();
 		Employee emp1 = new Employee();
 		Employee emp2 = new Employee();
 		Employee emp3 = new Employee();

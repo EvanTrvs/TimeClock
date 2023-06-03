@@ -1,5 +1,11 @@
 package serial;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -8,7 +14,17 @@ class UDPClient extends UDPClientBuilder implements Runnable {
 
 	public UDPClient()
 	{
-		toSend = new ArrayList<>();
+		
+		try {
+			getData();
+		} catch (IOException e) {
+			toSend = new ArrayList<>();
+		}
+	}
+
+	public void finalize()
+	{
+		saveData();
 	}
 	public void run() {
 
@@ -49,6 +65,32 @@ class UDPClient extends UDPClientBuilder implements Runnable {
 		sendSocket(new Timeclock(id,time));
 	}
 
-	
+	public void saveData() {
+		try (FileOutputStream fos = new FileOutputStream("data2send");
+				ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+
+			oos.writeObject(toSend);
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	@SuppressWarnings("unchecked") 
+	public void getData() throws IOException{
+		try (FileInputStream fis = new FileInputStream("data2send");
+		    ObjectInputStream ois = new ObjectInputStream(fis);) {
+
+		  toSend = (ArrayList<Timeclock>) ois.readObject();
+
+		} catch (ClassNotFoundException c) {
+		  System.out.println("Class not found");
+		  c.printStackTrace();
+		}
+
+	}
 	
 }

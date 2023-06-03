@@ -24,11 +24,11 @@ public class ApplicationTest {
 		
 		ApplicationCentrale test2 = new ApplicationCentrale();
 		test2.getData();
-		test2.getEmployee();
+		test2.getEmployees();
 		
 		ArrayList<Employee> l1,l2;
-		l1 = test.getEmployee();
-		l2= test2.getEmployee();
+		l1 = test.getEmployees();
+		l2= test2.getEmployees();
 		assertEquals(l1.size(),l2.size());
 		for (int i= 0;i<l1.size();i++)
 		{
